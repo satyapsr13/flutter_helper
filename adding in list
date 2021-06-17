@@ -1,0 +1,135 @@
+# main.dart
+------------------------------------------
+import 'package:flutter/material.dart';
+import 'package:vid4_1/adddnew.dart';
+import 'list.dart';
+// import 'list.dart';
+
+void main(List<String> args) {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'iamleo',
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  // HomePage(Key key,title:this.title)
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<Products> products = [
+    Products("satya", "satyayatisatya"),
+    Products("satya1", "1satyayatisatya"),
+    Products("2satya1", "2satyayatisatya"),
+  ];
+  // final List<Products> products;
+
+  // _HomePageState(this.products);
+  // HomePage(this.products);
+
+  // final nameContorller = TextEditingController();
+  void showDialogueBox(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return AddNewText(addText);
+      },
+    );
+  }
+
+  void addText(String id, String id1) {
+    final newtx = Products(id, id1);
+    setState(() {
+      products.add(newtx);
+    });
+    Navigator.pop(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("this is list ka example"),
+      ),
+      body: SafeArea(
+          // margin: const EdgeInsets.all(18.0),
+
+          child: Column(
+        children: products.map((e) {
+          return Card(
+            color: Colors.amber,
+            child: Text(
+              e.girlfriendname,
+              style: TextStyle(fontSize: 15),
+            ),
+          );
+        }).toList(),
+      )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialogueBox(context);
+        },
+        child: Icon(Icons.add_circle_outline_outlined),
+      ),
+    );
+  }
+}
+
+
+
+
+----------------------------------------------------------------------------
+# adddnew.dart
+
+import 'package:flutter/material.dart';
+// ignore: unused_import
+import 'list.dart';
+
+class AddNewText extends StatelessWidget {
+  // const AddNewText({ Key? key }) : super(key: key);
+  final name = TextEditingController();
+
+  final gname = TextEditingController();
+
+  final Function addText;
+
+  AddNewText(this.addText);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextField(
+          controller: name,
+        ),
+        TextField(
+          controller: gname,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.amber,
+          ),
+          child: TextButton(
+              onPressed: () {
+                addText(name.text, gname.text);
+              },
+              child: Text("click me !!!")),
+        ),
+        Text(" "),
+      ],
+    );
+
+  }
+}
+
+
